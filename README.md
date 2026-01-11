@@ -1,11 +1,12 @@
 # ☕ CoffeeBar
 
-**The elegant, lightweight JDK Manager for Windows.**
+**The elegant, lightweight JDK Manager for Windows, Linux & macOS.**
 
 CoffeeBar allows you to switch between Java versions instantly, download new JDKs directly from Eclipse Adoptium, and manage your environment variables with style.
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=flat-square&logo=python)
-![Platform](https://img.shields.io/badge/Platform-Windows-0078D6?style=flat-square&logo=windows)
+![PyPI](https://img.shields.io/pypi/v/coffeebar-jdk?style=flat-square&logo=pypi)
+![Platform](https://img.shields.io/badge/Platform-Win%20|%20Linux%20|%20macOS-0078D6?style=flat-square)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
 ---
@@ -14,65 +15,78 @@ CoffeeBar allows you to switch between Java versions instantly, download new JDK
 
 *   **⚡ Instant Switching**: Change your `JAVA_HOME` and `Path` in seconds.
 *   **📥 Integrated Downloader**: Download and install LTS JDKs (8, 11, 17, 21) directly from the app (powered by Eclipse Adoptium).
-*   **🚀 Smart Shell Refresh**: Updates your *current* terminal session immediately (supports CMD & PowerShell / Chocolatey `refreshenv`).
+    *   *Auto-detects Apple Silicon (M1/M2/M3) vs Intel.*
+*   **🚀 Smart Shell Refresh**:
+    *   **Windows**: Updates current session via `refreshenv` (CMD/PS).
+    *   **Linux/macOS**: Updates configuration via `.bashrc` / `.zshrc` integration.
 *   **🎨 Dual Interface**:
     *   **GUI**: A beautiful "Dark Mode" graphical interface built with CustomTkinter.
     *   **CLI**: A robust command-line tool for power users.
-*   **🔍 Auto-Discovery**: Automatically finds JDKs in `Program Files`, `%UserProfile%\.jdks` (IntelliJ), and custom paths.
+*   **🔍 Auto-Discovery**: Automatically finds JDKs in `Program Files`, `.jdks` (IntelliJ), `/usr/lib/jvm`, `/Library/Java/JavaVirtualMachines` (macOS), etc.
 
 ---
 
 ## 🛠️ Installation
 
-1.  **Prerequisites**: Ensure you have [Python 3](https://www.python.org/downloads/) installed.
-2.  **Clone/Download** this repository.
-3.  **Run the Installer**:
-    Double-click `install.bat`
-    
-    *This script will install dependencies and add the global `coffeebar` command to your system.*
+### 📦 PyPI (Recommended)
+The easiest way to install on any platform:
+```bash
+pip install coffeebar-jdk
+```
+
+### 🪟 Windows (Manual)
+1.  **Prerequisites**: Python 3 installed.
+2.  Run `install.bat`.
+
+### 🐧 Linux / 🍎 macOS (Manual)
+1.  **Prerequisites**: Python 3 installed.
+2.  Install `python3-tkinter` (Linux only, usually included in macOS/Windows).
+    *   Debian/Ubuntu: `sudo apt-get install python3-tk`
+3.  Run the installer:
+
+```bash
+chmod +x install.sh
+./install.sh
+```
+
+**Post-Install (Linux/Mac):** Restart terminal or run `source ~/.bashrc` (or `.zshrc`).
 
 ---
 
 ## 📖 Usage
 
-Once installed, you can use the `coffeebar` command anywhere.
+Once installed, use the `coffeebar` command globally.
 
-### 💻 CLI Mode (Command Line)
+### 💻 CLI Mode
 
 | Action | Command | Description |
 | :--- | :--- | :--- |
-| **List JDKs** | `coffeebar list` | Show all detected Java versions. |
-| **Switch** | `coffeebar use 17` | Switch to a specific version (supports partial names). |
-| **Install** | `coffeebar install 21` | Download and install a new JDK version. |
-| **Current** | `coffeebar current` | Show the active `JAVA_HOME`. |
-| **GUI** | `coffeebar` | Launch the graphical interface. |
+| **List JDKs** | `coffeebar list` | List available versions found in system paths. |
+| **Switch** | `coffeebar use 17` | Switch `JAVA_HOME` (supports partial names). |
+| **Install** | `coffeebar install 21` | Download LTS JDK from Adoptium. |
+| **Current** | `coffeebar current` | Show active JDK. |
+| **GUI** | `coffeebar` | Launch graphical interface. |
 
 **Example:**
-```powershell
-PS C:\> coffeebar use 17
-[CoffeeBar] Chocolatey detected. Refreshing environment...
-Successfully switched to sapmachine-17.0.10
+```bash
+$ coffeebar use 17
+Set JAVA_HOME to /usr/lib/jvm/temurin-17
+[CoffeeBar] Environment updated.
 ```
 
 ### 🖥️ GUI Mode
 
-Simply run:
-```powershell
-coffeebar
-```
-Or launch via `python -m src.main` if you haven't run the installer.
+Simply run `coffeebar` (or `python3 -m coffeebar.main`).
 
-*   **List & Switch**: Click "Set Active" on any JDK card.
-*   **Download**: Click **"⬇ Install JDK"** to fetch new versions.
-*   **Add Path**: Manually scan other folders for portable JDKs.
+*   **Cross-platform**: Looks native on Windows, Linux (Gnome/KDE), and macOS.
+*   **One-Click Install**: Downloads the correct `.tar.gz` or `.zip` for your OS and Architecture.
 
 ---
 
-## ⚙️ Technical Details
+## ⚙️ How it works
 
-*   **Environment**: Modifies User Environment Variables (`HKCU\Environment`).
-*   **Session Refresh**: Uses a wrapper strategy (`bin/coffeebar.cmd` and `bin/coffeebar.ps1`) to inject variable changes into the parent process, so you don't have to restart your terminal.
-*   **Location**: JDKs are installed to `%UserProfile%\.jdks`, compatible with IntelliJ IDEA.
+*   **Windows**: Modifies `HKCU\Environment` and broadcasts changes.
+*   **Linux/macOS**: Manages a lightweight file `~/.coffeebar_env` which is sourced by your shell configuration and uses simple shell aliases.
 
 ---
 

@@ -1,0 +1,26 @@
+#!/bin/bash
+# CoffeeBar Wrapper for Linux/macOS
+
+# Resolve project root
+# Assume script is in bin/coffeebar
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+PROJECT_ROOT="$SCRIPT_DIR/.."
+
+# Run Pyton app
+python3 -m coffeebar.main "$@"
+EXIT_CODE=$?
+
+# If command was 'use' and successful, we need to instruct the user
+if [ "$1" == "use" ] && [ $EXIT_CODE -eq 0 ]; then
+    echo ""
+    echo "[CoffeeBar] Environment updated in config file."
+    echo "[CoffeeBar] To apply changes to THIS terminal, run:"
+    echo "    source ~/.coffeebar_env"
+    echo ""
+    
+    # Try to source it if we are being sourced?
+    # No, a child process script cannot affect parent shell environment unless sourced.
+    # The user should alias coffeebar='source .../bin/coffeebar' or function.
+fi
+
+exit $EXIT_CODE

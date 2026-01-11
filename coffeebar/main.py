@@ -1,5 +1,5 @@
 import sys
-from src.ui import cli, gui
+from coffeebar.ui import cli, gui
 
 def main():
     if len(sys.argv) > 1:

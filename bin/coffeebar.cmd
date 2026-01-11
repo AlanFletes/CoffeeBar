@@ -8,7 +8,7 @@ set "PROJECT_ROOT=%~dp0.."
 pushd "%PROJECT_ROOT%"
 
 REM Run the Python application
-python -m src.main %*
+python -m coffeebar.main %*
 set PYTHON_EXIT_CODE=%ERRORLEVEL%
 
 popd

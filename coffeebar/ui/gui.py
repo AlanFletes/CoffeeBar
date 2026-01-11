@@ -2,8 +2,8 @@ import customtkinter as ctk
 from tkinter import filedialog, messagebox
 import os
 import threading
-from src.core.jdk_manager import JdkManager
-from src.core.jdk_downloader import JdkDownloader
+from coffeebar.core.jdk_manager import JdkManager
+from coffeebar.core.jdk_downloader import JdkDownloader
 
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue")

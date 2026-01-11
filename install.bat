@@ -22,7 +22,7 @@ if %ERRORLEVEL% neq 0 (
 
 echo.
 echo [2/3] Adding CoffeeBar to PATH...
-python -m src.main add-to-path
+python -m coffeebar.main add-to-path
 
 echo.
 echo =====================

@@ -3,9 +3,9 @@ from rich.console import Console
 import os
 from rich.table import Table
 from rich.panel import Panel
-from src.core.jdk_manager import JdkManager
-from src.core.jdk_downloader import JdkDownloader
-from src.core import registry_utils
+from coffeebar.core.jdk_manager import JdkManager
+from coffeebar.core.jdk_downloader import JdkDownloader
+from coffeebar.core import registry_utils
 from pathlib import Path
 from rich.progress import Progress
 import sys

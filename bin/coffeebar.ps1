@@ -16,7 +16,7 @@ Set-Location $ProjectRoot
 
 # Run the Python application
 # We use & to run the command and pass all arguments
-python -m src.main @ScriptArgs
+python -m coffeebar.main @ScriptArgs
 $PythonExitCode = $LASTEXITCODE
 
 Set-Location $OriginalLocation
