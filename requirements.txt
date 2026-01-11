@@ -1,0 +1,7 @@
+customtkinter
+typer
+rich
+pywin32
+packaging
+Pillow
+requests
