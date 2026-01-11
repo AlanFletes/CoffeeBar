@@ -1,63 +1,79 @@
-# CoffeeBar
+# ☕ CoffeeBar
 
-A lightweight and elegant tool to manage Java JDK versions on Windows.
+**The elegant, lightweight JDK Manager for Windows.**
 
-## Features
-- **Switch JDKs**: Easily change the `JAVA_HOME` environment variable and update `Path`.
-- **Auto-Discovery**: Automatically finds JDKs in common locations (e.g., `C:\Program Files\Java`, `%UserProfile%\.jdks`).
-- **Dual Interface**:
-    - **GUI**: Modern, dark-mode friendly graphical interface.
-    - **CLI**: Fast command-line interface for scripting or quick switches.
+CoffeeBar allows you to switch between Java versions instantly, download new JDKs directly from Eclipse Adoptium, and manage your environment variables with style.
 
-## Installation
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=flat-square&logo=python)
+![Platform](https://img.shields.io/badge/Platform-Windows-0078D6?style=flat-square&logo=windows)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
-1. Install Python 3.
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+---
 
-### Usage - Best Practice (Wrappers)
+## ✨ Features
 
-To ensure that environment variables are updated in your **current** terminal session immediately, rely on the wrapper scripts in the `bin/` directory.
+*   **⚡ Instant Switching**: Change your `JAVA_HOME` and `Path` in seconds.
+*   **📥 Integrated Downloader**: Download and install LTS JDKs (8, 11, 17, 21) directly from the app (powered by Eclipse Adoptium).
+*   **🚀 Smart Shell Refresh**: Updates your *current* terminal session immediately (supports CMD & PowerShell / Chocolatey `refreshenv`).
+*   **🎨 Dual Interface**:
+    *   **GUI**: A beautiful "Dark Mode" graphical interface built with CustomTkinter.
+    *   **CLI**: A robust command-line tool for power users.
+*   **🔍 Auto-Discovery**: Automatically finds JDKs in `Program Files`, `%UserProfile%\.jdks` (IntelliJ), and custom paths.
 
-1.  Add `e:\MabeInternalTools\CoffeeBar\bin` to your system `Path`.
-2.  Restart your terminal one last time.
-3.  Use the `coffeebar` command directly:
+---
 
+## 🛠️ Installation
+
+1.  **Prerequisites**: Ensure you have [Python 3](https://www.python.org/downloads/) installed.
+2.  **Clone/Download** this repository.
+3.  **Run the Installer**:
+    Double-click `install.bat`
+    
+    *This script will install dependencies and add the global `coffeebar` command to your system.*
+
+---
+
+## 📖 Usage
+
+Once installed, you can use the `coffeebar` command anywhere.
+
+### 💻 CLI Mode (Command Line)
+
+| Action | Command | Description |
+| :--- | :--- | :--- |
+| **List JDKs** | `coffeebar list` | Show all detected Java versions. |
+| **Switch** | `coffeebar use 17` | Switch to a specific version (supports partial names). |
+| **Install** | `coffeebar install 21` | Download and install a new JDK version. |
+| **Current** | `coffeebar current` | Show the active `JAVA_HOME`. |
+| **GUI** | `coffeebar` | Launch the graphical interface. |
+
+**Example:**
 ```powershell
-# Updates JAVA_HOME and refreshes current session
-coffeebar use 17
+PS C:\> coffeebar use 17
+[CoffeeBar] Chocolatey detected. Refreshing environment...
+Successfully switched to sapmachine-17.0.10
 ```
 
-*Note: The wrappers automatically detect if Chocolatey is installed and run `refreshenv` to update your current session.*
+### 🖥️ GUI Mode
 
-### Manual Usage (Python)
-
-If you run via `python`, changes only apply to **new** terminals:
-
-**GUI Mode:**
-```bash
-python -m src.main
+Simply run:
+```powershell
+coffeebar
 ```
+Or launch via `python -m src.main` if you haven't run the installer.
 
-### CLI Mode
-Run with commands to use the CLI:
+*   **List & Switch**: Click "Set Active" on any JDK card.
+*   **Download**: Click **"⬇ Install JDK"** to fetch new versions.
+*   **Add Path**: Manually scan other folders for portable JDKs.
 
-**List available JDKs:**
-```bash
-python -m src.main list
-```
+---
 
-**Show current JDK:**
-```bash
-python -m src.main current
-```
+## ⚙️ Technical Details
 
-**Switch JDK:**
-```bash
-python -m src.main use <name_or_path>
-# Example:
-python -m src.main use 17
-python -m src.main use "C:\MyJDKs\jdk-21"
-```
+*   **Environment**: Modifies User Environment Variables (`HKCU\Environment`).
+*   **Session Refresh**: Uses a wrapper strategy (`bin/coffeebar.cmd` and `bin/coffeebar.ps1`) to inject variable changes into the parent process, so you don't have to restart your terminal.
+*   **Location**: JDKs are installed to `%UserProfile%\.jdks`, compatible with IntelliJ IDEA.
+
+---
+
+Made with ❤️ for developers.
